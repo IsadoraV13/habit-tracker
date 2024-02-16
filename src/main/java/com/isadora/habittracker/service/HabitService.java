@@ -4,7 +4,7 @@ import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.repository.HabitRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Optional;
 
 @Service
 public class HabitService {
@@ -15,8 +15,12 @@ public class HabitService {
         this.habitRepository = habitRepository;
     }
 
-    public List<Habit> listAllHabits() {
+    public Iterable<Habit> listAllHabits() {
         return habitRepository.findAll();
 
+    }
+
+    public Optional<Habit> listHabitById(int habitId) {
+        return habitRepository.findById(habitId);
     }
 }
