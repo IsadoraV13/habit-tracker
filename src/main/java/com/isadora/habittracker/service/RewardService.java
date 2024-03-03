@@ -18,4 +18,8 @@ public class RewardService {
     public Optional<Reward> listRewardById(int rewardId) {
         return rewardRepository.findById(rewardId);
     }
+
+    public Iterable<Reward> listAllRewards() {
+        return rewardRepository.findAll();
+    }
 }

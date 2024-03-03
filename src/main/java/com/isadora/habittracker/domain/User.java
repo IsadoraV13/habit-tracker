@@ -6,17 +6,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueUsername", columnNames = { "username", "isActive" }) })
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(name = "UniqueUsername", columnNames = { "username", "isActive" }) })
 public class User {
     @Id
     private int userId;
     private String username;
     private Boolean isActive;
 
-    public User(int userId, String username, Boolean isActive) {
-        this.userId = userId;
-        this.username = username;
-        this.isActive = isActive;
+    public User() {
+
     }
 
     public int getUserId() {

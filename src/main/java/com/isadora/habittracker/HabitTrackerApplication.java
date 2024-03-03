@@ -6,10 +6,11 @@ import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfig
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, JpaRepositoriesAutoConfiguration.class})
+@SpringBootApplication()
+// exclude = {DataSourceAutoConfiguration.class}, JpaRepositoriesAutoConfiguration.class
 //@ComponentScan(basePackages = {"com.isadora.habittracker.repository", "com.isadora.habittracker.service"})
 //@EnableJpaRepositories(basePackageClasses = {HabitRepository.class, RewardRepository.class})
-@EntityScan(basePackages = {"com.isadora.habittracker"})
+//@EntityScan(basePackages = {"com.isadora.habittracker"})
 public class HabitTrackerApplication {
 
 	public static void main(String[] args) {

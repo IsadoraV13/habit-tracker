@@ -8,11 +8,11 @@ import jakarta.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="habit")
+@Table(name="habits")
 public class Habit {
     @Id
     @GeneratedValue
-    private int habitId;
+    private Integer habitId;
     private String habitName; // user defined
     private int userId;
     private int themeId;
@@ -22,15 +22,8 @@ public class Habit {
 
     //ToDo need a way to determine streaks
 
+    public Habit() {
 
-    public Habit(int habitId, String habitName, int userId, int themeId, int points, Timestamp created, Timestamp lastModified) {
-        this.habitId = habitId;
-        this.habitName = habitName;
-        this.userId = userId;
-        this.themeId = themeId;
-        this.points = points;
-        this.created = created;
-        this.lastModified = lastModified;
     }
 
     public int getHabitId() {

@@ -1,11 +1,16 @@
 package com.isadora.habittracker.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "reminders")
 public class Reminder {
+
+    @Id
     private int reminderId;
     private int habitId; //every reminder is linked to a habit
     private Timestamp startTime;
@@ -14,6 +19,10 @@ public class Reminder {
         this.reminderId = reminderId;
         this.habitId = habitId;
         this.startTime = startTime;
+    }
+
+    public Reminder() {
+
     }
 
     public int getReminderId() {

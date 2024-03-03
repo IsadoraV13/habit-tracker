@@ -1,15 +1,18 @@
 package com.isadora.habittracker.domain;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "themes")
 public class Theme {
+    @Id
     private int themeId;
     private int themeName;
 
-    public Theme(int themeId, int themeName) {
-        this.themeId = themeId;
-        this.themeName = themeName;
+    public Theme() {
+
     }
 
     public int getThemeId() {

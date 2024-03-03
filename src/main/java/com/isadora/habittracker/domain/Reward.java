@@ -3,8 +3,10 @@ package com.isadora.habittracker.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "rewards")
 public class Reward {
     @Id
     @GeneratedValue
@@ -12,10 +14,8 @@ public class Reward {
     private String rewardName;
     private int habitId; //a reward is linked to a specific habit
 
-    public Reward(int rewardId, String rewardName, int habitId) {
-        this.rewardId = rewardId;
-        this.rewardName = rewardName;
-        this.habitId = habitId;
+    public Reward() {
+
     }
 
     public int getRewardId() {
