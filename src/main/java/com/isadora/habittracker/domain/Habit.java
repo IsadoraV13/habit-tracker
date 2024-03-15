@@ -1,37 +1,43 @@
 package com.isadora.habittracker.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="habits")
+@Table(name="habit")
 public class Habit {
     @Id
     @GeneratedValue
-    private Integer habitId;
-    private String habitName; // user defined
+    @Column(name = "id")
+    private Integer id;
+    private String habitName; // user defined ToDo: later add a field 'habit details'
     private int userId;
+    @ManyToOne
+    @JoinColumn(name="reward_id")
+    private Reward reward;
     private int themeId;
-    private int points;
+    private int difficultyPoints; //ToDo translate this from an Enum selected by the user (Hard, Medium, Easy)
     private Timestamp created;
     private Timestamp lastModified;
 
     //ToDo need a way to determine streaks
 
+    // when user clicks a button to confirm they have performed a habit:
+        // reward.save()
+        // create a streak of 0 (for first time)
+        // then create rules (where?) around how often the habit must/can be performed to determine if a streak is achieved
+
     public Habit() {
 
     }
 
-    public int getHabitId() {
-        return habitId;
+    public int getId() {
+        return id;
     }
 
-    public void setHabitId(int habitId) {
-        this.habitId = habitId;
+    public void setId(int habitId) {
+        this.id = habitId;
     }
 
     public String getHabitName() {
@@ -46,39 +52,24 @@ public class Habit {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public Reward getReward() {
+        return reward;
     }
 
     public int getThemeId() {
         return themeId;
     }
 
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
-    }
-
-    public int getPoints() {
-        return points;
-    }
-
-    public void setPoints(int points) {
-        this.points = points;
+    public int getDifficultyPoints() {
+        return difficultyPoints;
     }
 
     public Timestamp getCreated() {
         return created;
     }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
-
     public Timestamp getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Timestamp lastModified) {
-        this.lastModified = lastModified;
-    }
 }

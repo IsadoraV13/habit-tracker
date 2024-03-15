@@ -5,11 +5,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "themes")
+@Table(name = "theme")
 public class Theme {
     @Id
     private int themeId;
-    private int themeName;
+    private String themeName; // e.g. health, career progression, family
 
     public Theme() {
 
@@ -19,15 +19,8 @@ public class Theme {
         return themeId;
     }
 
-    public void setThemeId(int themeId) {
-        this.themeId = themeId;
-    }
-
-    public int getThemeName() {
+    public String getThemeName() {
         return themeName;
     }
 
-    public void setThemeName(int themeName) {
-        this.themeName = themeName;
-    }
 }

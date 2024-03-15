@@ -1,44 +1,36 @@
 package com.isadora.habittracker.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.Set;
 
 @Entity
-@Table(name = "rewards")
+@Table(name="reward")
 public class Reward {
     @Id
     @GeneratedValue
-    private int rewardId;
+    @Column(name="id")
+    private int id;
     private String rewardName;
-    private int habitId; //a reward is linked to a specific habit
+    @OneToMany(mappedBy="reward")
+    @Column(name="habits")
+    private Set<Habit> habits; //a reward is not user input and many habits can be linked to the same reward level
 
     public Reward() {
 
     }
 
-    public int getRewardId() {
-        return rewardId;
+    public int getId() {
+        return id;
     }
 
-    public void setRewardId(int rewardId) {
-        this.rewardId = rewardId;
-    }
 
     public String getRewardName() {
         return rewardName;
     }
 
-    public void setRewardName(String rewardName) {
-        this.rewardName = rewardName;
+    public Set<Habit> getHabits() {
+        return habits;
     }
 
-    public int getHabitId() {
-        return habitId;
-    }
-
-    public void setHabitId(int habitId) {
-        this.habitId = habitId;
-    }
 }

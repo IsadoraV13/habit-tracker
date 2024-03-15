@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "reminders")
+@Table(name = "reminder")
 public class Reminder {
 
     @Id
@@ -29,23 +29,12 @@ public class Reminder {
         return reminderId;
     }
 
-    public void setReminderId(int reminderId) {
-        this.reminderId = reminderId;
-    }
-
     public int getHabitId() {
         return habitId;
-    }
-
-    public void setHabitId(int habitId) {
-        this.habitId = habitId;
     }
 
     public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
-    }
 }

@@ -11,7 +11,7 @@ public class RewardService {
 
     private final RewardRepository rewardRepository;
 
-    public RewardService(RewardRepository rewardRepository) {
+    public RewardService(final RewardRepository rewardRepository) {
         this.rewardRepository = rewardRepository;
     }
 

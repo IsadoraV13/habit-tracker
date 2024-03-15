@@ -15,7 +15,7 @@ public class HabitService {
 
     private final HabitRepository habitRepository;
 
-    public HabitService(HabitRepository habitRepository) {
+    public HabitService(final HabitRepository habitRepository) {
         this.habitRepository = habitRepository;
     }
 
