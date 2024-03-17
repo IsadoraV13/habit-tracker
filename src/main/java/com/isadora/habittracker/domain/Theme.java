@@ -1,13 +1,12 @@
 package com.isadora.habittracker.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "theme")
 public class Theme {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     private int themeId;
     private String themeName; // e.g. health, career progression, family
 

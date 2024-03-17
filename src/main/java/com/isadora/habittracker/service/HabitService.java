@@ -1,9 +1,8 @@
 package com.isadora.habittracker.service;
 
 import com.isadora.habittracker.domain.Habit;
-import com.isadora.habittracker.domain.HabitResponse;
+import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.repository.HabitRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,9 +13,11 @@ import java.util.stream.StreamSupport;
 public class HabitService {
 
     private final HabitRepository habitRepository;
+    private final RewardService rewardService;
 
-    public HabitService(final HabitRepository habitRepository) {
+    public HabitService(final HabitRepository habitRepository, RewardService rewardService) {
         this.habitRepository = habitRepository;
+        this.rewardService = rewardService;
     }
 
     public List<Habit> listAllHabits() {
@@ -25,5 +26,14 @@ public class HabitService {
 
     public Optional<Habit> listHabitById(int habitId) {
         return habitRepository.findById(habitId);
+    }
+
+    public void assignRewardWhenSavingHabit(Habit newHabit, Reward rewardLevel) {
+        newHabit.setReward(rewardLevel);
+        rewardLevel.getHabits().add(newHabit);
+    }
+
+    public Habit saveHabit(Habit newHabit) {
+        return habitRepository.save(newHabit);
     }
 }

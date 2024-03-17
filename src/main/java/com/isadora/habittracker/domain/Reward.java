@@ -8,8 +8,8 @@ import java.util.Set;
 @Table(name="reward")
 public class Reward {
     @Id
-    @GeneratedValue
-    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name="reward_id") //ToDo how do I get this to also be called "id"?
     private int id;
     private String rewardName;
     @OneToMany(mappedBy="reward")

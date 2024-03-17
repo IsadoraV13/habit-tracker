@@ -6,9 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "habit_user", uniqueConstraints = { @UniqueConstraint(name = "UniqueUsername", columnNames = { "username", "is_active" }) })
 public class User {
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private int id;
     private String username;
-//    @Column(name = "is_active")
     private Boolean isActive;
 
     public User() {
