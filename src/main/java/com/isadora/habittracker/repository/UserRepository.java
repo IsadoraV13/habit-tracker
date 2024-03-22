@@ -15,4 +15,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Query(value = "select id, username, is_active from habit_user WHERE is_active = true", nativeQuery = true)
     List<User> findAllActiveUsers();
+
+    @Query(value = "select id, username, is_active from habit_user WHERE is_active = false", nativeQuery = true)
+    List<User> findAllInactiveUsers();
 }

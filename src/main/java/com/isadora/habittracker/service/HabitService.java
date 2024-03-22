@@ -28,12 +28,21 @@ public class HabitService {
         return habitRepository.findById(habitId);
     }
 
-    public void assignRewardWhenSavingHabit(Habit newHabit, Reward rewardLevel) {
-        newHabit.setReward(rewardLevel);
-        rewardLevel.getHabits().add(newHabit);
+    public Habit assignDefaultRewardWhenSavingHabit(Habit newHabit) {
+        Reward defaultReward = rewardService.listRewardById(1).get(); // ToDo is this okay?
+        newHabit.setReward(defaultReward);
+        return habitRepository.save(newHabit);
+
     }
 
-    public Habit saveHabit(Habit newHabit) {
+    public Habit createNewHabit(final long userId, final String habitName, final int themeId, final int difficultyPoints) {
+        Habit newHabit = new Habit();
+        newHabit.setId(userId);
+        newHabit.setHabitName(habitName);
+        newHabit.setReward(rewardService.listRewardById(1).get());
+        newHabit.setThemeId(themeId);
+        newHabit.setDifficultyPoints(difficultyPoints);
+        assignDefaultRewardWhenSavingHabit(newHabit);
         return habitRepository.save(newHabit);
     }
 }

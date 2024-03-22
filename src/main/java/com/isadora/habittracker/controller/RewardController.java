@@ -2,15 +2,13 @@ package com.isadora.habittracker.controller;
 
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Reward;
-import com.isadora.habittracker.domain.RewardResponse;
+import com.isadora.habittracker.controller.response.RewardResponse;
 import com.isadora.habittracker.service.RewardService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/rewards")

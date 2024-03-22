@@ -1,5 +1,6 @@
 package com.isadora.habittracker.service;
 
+import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.domain.Theme;
 import com.isadora.habittracker.repository.RewardRepository;
@@ -22,5 +23,9 @@ public class ThemeService {
 
     public Iterable<Theme> listAllThemes() {
         return themeRepository.findAll();
+    }
+
+    public Iterable<Theme> listThemeByUserId(int userId) {
+        return themeRepository.findByUserId(userId);
     }
 }

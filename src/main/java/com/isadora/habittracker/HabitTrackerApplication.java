@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication()
 // exclude = {DataSourceAutoConfiguration.class}, JpaRepositoriesAutoConfiguration.class
@@ -16,6 +18,11 @@ public class HabitTrackerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HabitTrackerApplication.class, args);
 		System.out.println("this application is running");
+	}
+
+	@Bean
+	public RestTemplate getRestTemplate() {
+		return new RestTemplate();
 	}
 
 }

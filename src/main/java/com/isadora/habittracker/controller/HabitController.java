@@ -1,8 +1,9 @@
 package com.isadora.habittracker.controller;
 
+import com.isadora.habittracker.controller.request.CreateHabitRequest;
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
-import com.isadora.habittracker.domain.HabitResponse;
+import com.isadora.habittracker.controller.response.HabitResponse;
 import com.isadora.habittracker.service.HabitService;
 import com.isadora.habittracker.service.RewardService;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +50,16 @@ public class HabitController {
     // Optional int parameter 'habitId' is present but cannot be translated into a null value due to being declared as
     // a primitive type. Consider declaring it as object wrapper for the corresponding primitive type.
 
-    @PostMapping("/new")
-    public ResponseEntity<Habit> saveHabit(@RequestBody Habit newHabit) {
-        return ResponseEntity.ok(habitService.saveHabit(newHabit));
-//        habitService.saveHabit(newHabit);
+    @PostMapping("/{userId}/{themeId}/new")
+    public ResponseEntity<Habit> createHabit(@RequestBody CreateHabitRequest createHabitRequest,
+                                           @PathVariable(name = "userId") long userId,
+                                           @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
+//        habitService.saveHabit(name, userId, ...)
+
+        return ResponseEntity.ok(habitService.createNewHabit(userId, createHabitRequest.habitName(), themeId, createHabitRequest.difficultyPoints()));
+        // here: needs to take the assignDefault method
 //        habitService.assignRewardWhenSavingHabit(newHabit, rewardService.listRewardById(1).get());
-//        return ResponseEntity.ok(habitService.listHabitById(newHabit.getId()).get());
+
     }
 
     /* Habit saved via postman - without reward

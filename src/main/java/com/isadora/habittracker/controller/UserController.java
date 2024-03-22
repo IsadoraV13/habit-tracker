@@ -31,6 +31,11 @@ public class UserController {
         return userService.listAllActiveUsers();
     }
 
+    @GetMapping("/inactive")
+    public List<User> viewAllInactiveUsers() {
+        return userService.listAllInactiveUsers();
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> viewUserById(@PathVariable int userId) {
         var someUser = userService.listUserById(userId);

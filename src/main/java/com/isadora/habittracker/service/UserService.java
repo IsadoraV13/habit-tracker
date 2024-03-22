@@ -27,4 +27,8 @@ public class UserService {
     public Optional<User> listUserById(int userId) {
         return userRepository.findById(userId);
     }
+
+    public List<User> listAllInactiveUsers() {
+        return userRepository.findAllInactiveUsers();
+    }
 }
