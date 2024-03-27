@@ -32,9 +32,10 @@ Questions
 - can a habit be created without a theme? 
 
 ToDo
-- the default reward (L1) must be associated with all new habits - 
-- get all themes by user id - currently blocked because
-- private int userId in Habit; //ToDo need mapping here
+- the default reward (L1) must be associated with all new habits - currently works and created timestamp now works! :)
+- get all themes by user id - Done!
+- pass a theme id when saving a habit (assumption is this be passed in the url)
+- private int userId in Habit; Done
 
 ### Gamification
 Rewards are obtained for 1st habit completion and for streaks.  

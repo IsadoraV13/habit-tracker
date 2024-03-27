@@ -18,4 +18,4 @@ VALUES
 INSERT INTO theme (id, theme_name, user_id)
 VALUES
     (1, 'bada$$ fitness', 1),
-    (2, 'learning to code', 1);
+    (2, 'learning to code', 2);

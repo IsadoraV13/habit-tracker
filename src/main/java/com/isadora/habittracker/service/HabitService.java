@@ -14,10 +14,12 @@ public class HabitService {
 
     private final HabitRepository habitRepository;
     private final RewardService rewardService;
+    private final UserService userService;
 
-    public HabitService(final HabitRepository habitRepository, RewardService rewardService) {
+    public HabitService(final HabitRepository habitRepository, RewardService rewardService, UserService userService) {
         this.habitRepository = habitRepository;
         this.rewardService = rewardService;
+        this.userService = userService;
     }
 
     public List<Habit> listAllHabits() {
@@ -35,10 +37,10 @@ public class HabitService {
 
     }
 
-    public Habit createNewHabit(final long userId, final String habitName, final int themeId, final int difficultyPoints) {
+    public Habit createNewHabit(final int userId, final String habitName, final int themeId, final int difficultyPoints) {
         Habit newHabit = new Habit();
-        newHabit.setId(userId);
         newHabit.setHabitName(habitName);
+        newHabit.setUser(userService.listUserById(userId).get());
         newHabit.setReward(rewardService.listRewardById(1).get());
         newHabit.setThemeId(themeId);
         newHabit.setDifficultyPoints(difficultyPoints);

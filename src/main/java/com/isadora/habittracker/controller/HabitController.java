@@ -1,6 +1,7 @@
 package com.isadora.habittracker.controller;
 
 import com.isadora.habittracker.controller.request.CreateHabitRequest;
+import com.isadora.habittracker.controller.response.ThemeResponse;
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.controller.response.HabitResponse;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/habits")
@@ -24,14 +27,17 @@ public class HabitController {
     }
 
     @GetMapping
-    public List<ResponseEntity<HabitResponse>> ViewAllHabits() {
-        final List<Habit> allHabits = habitService.listAllHabits();
+    public ResponseEntity<List<HabitResponse>> ViewAllHabits() {
+        var allHabits = habitService.listAllHabits();
         if (!allHabits.isEmpty()) {
-            return allHabits.stream().map(habit -> ResponseEntity.ok(HabitResponse.of(habit))).toList();
+            var habitResponseList = StreamSupport.stream(allHabits.spliterator(), false).collect(Collectors.toList())
+                    .stream().map(s -> HabitResponse.of(s)).collect(Collectors.toList());
+            return ResponseEntity.ok(habitResponseList);
         }
         //StreamSupport.stream(allHabits.spliterator(), false)
         throw new EntityNotFound();
     }
+
     @GetMapping("/test")
     public Iterable<Habit> viewAllHabitsTest() {
         return habitService.listAllHabits();
@@ -50,9 +56,14 @@ public class HabitController {
     // Optional int parameter 'habitId' is present but cannot be translated into a null value due to being declared as
     // a primitive type. Consider declaring it as object wrapper for the corresponding primitive type.
 
+
+    // click create new habit
+    // 'Select the Theme this is linked to" >> Theme drop down (findThemesByUserId)
+    // ToDo/Question: once a Theme is selected, is the ThemeId passed into the url for the Habit post url
+
     @PostMapping("/{userId}/{themeId}/new")
     public ResponseEntity<Habit> createHabit(@RequestBody CreateHabitRequest createHabitRequest,
-                                           @PathVariable(name = "userId") long userId,
+                                           @PathVariable(name = "userId") int userId,
                                            @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
 //        habitService.saveHabit(name, userId, ...)
 

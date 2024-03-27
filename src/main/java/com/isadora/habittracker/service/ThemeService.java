@@ -1,9 +1,6 @@
 package com.isadora.habittracker.service;
 
-import com.isadora.habittracker.domain.EntityNotFound;
-import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.domain.Theme;
-import com.isadora.habittracker.repository.RewardRepository;
 import com.isadora.habittracker.repository.ThemeRepository;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +24,9 @@ public class ThemeService {
 
     public Iterable<Theme> listThemeByUserId(int userId) {
         return themeRepository.findByUserId(userId);
+    }
+
+    public Iterable<Theme> listThemeByUsers() {
+        return themeRepository.findThemesAndUsers();
     }
 }
