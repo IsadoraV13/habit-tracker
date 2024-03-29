@@ -26,6 +26,11 @@ How does a user use the app?
     - if the theme already exists, they will be able to select it from a drop down (UI)
     - means that when user clicks drop down, there will be a call to BE to retrieve all themes for that user
     - what is a theme? an overarching goal 
+- in the background, for every new habit, an L0 reward is added.
+    - an L1 is earned every time a habit is completed for the first time
+- a difficulty point is a multiplier on the reward:
+    - if an easy habit is completed, the multiplier is 1
+    - if a hard habit is completed, the multiplier is 3
 - that a number of habits relate to, e.g. health or career
 
 Questions
@@ -36,6 +41,9 @@ ToDo
 - get all themes by user id - Done!
 - pass a theme id when saving a habit (assumption is this be passed in the url)
 - private int userId in Habit; Done
+- add Habit counter - Done
+- create updateHabit (can update: theme, habitName, difficultyPoints)
+- incorporate Habit counter
 
 ### Gamification
 Rewards are obtained for 1st habit completion and for streaks.  

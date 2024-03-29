@@ -1,5 +1,6 @@
 package com.isadora.habittracker.service;
 
+import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.repository.HabitRepository;
@@ -31,7 +32,7 @@ public class HabitService {
     }
 
     public Habit assignDefaultRewardWhenSavingHabit(Habit newHabit) {
-        Reward defaultReward = rewardService.listRewardById(1).get(); // ToDo is this okay?
+        Reward defaultReward = rewardService.listRewardById(1).get();
         newHabit.setReward(defaultReward);
         return habitRepository.save(newHabit);
 
@@ -46,5 +47,20 @@ public class HabitService {
         newHabit.setDifficultyPoints(difficultyPoints);
         assignDefaultRewardWhenSavingHabit(newHabit);
         return habitRepository.save(newHabit);
+    }
+
+
+    public Habit updateHabit(final int userId, final int habitId, final String habitName, final int themeId, final int difficultyPoints) {
+        Optional<Habit> habitToUpdate = listHabitById(habitId);
+        if (habitToUpdate.isPresent()) {
+            habitToUpdate.get().setHabitName(habitName);
+            habitToUpdate.get().setUser(userService.listUserById(userId).get());
+            habitToUpdate.get().setReward(rewardService.listRewardById(1).get());
+            habitToUpdate.get().setThemeId(themeId);
+            habitToUpdate.get().setDifficultyPoints(difficultyPoints);
+            assignDefaultRewardWhenSavingHabit(habitToUpdate.get());
+            return habitRepository.save(habitToUpdate.get());
+        }
+        throw new EntityNotFound();
     }
 }

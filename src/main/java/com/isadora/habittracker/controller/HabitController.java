@@ -63,8 +63,8 @@ public class HabitController {
 
     @PostMapping("/{userId}/{themeId}/new")
     public ResponseEntity<Habit> createHabit(@RequestBody CreateHabitRequest createHabitRequest,
-                                           @PathVariable(name = "userId") int userId,
-                                           @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
+                                             @PathVariable(name = "userId") int userId,
+                                             @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
 //        habitService.saveHabit(name, userId, ...)
 
         return ResponseEntity.ok(habitService.createNewHabit(userId, createHabitRequest.habitName(), themeId, createHabitRequest.difficultyPoints()));
@@ -76,9 +76,18 @@ public class HabitController {
     /* Habit saved via postman - without reward
         {
             "habitName": "new habit via postman - without reward",
-            "userId": 1,
-            "themeId":1,
             "difficultyPoints": 3
         }
      */
+
+    @PutMapping("/{userId}/{themeId}/{habitId}")
+    public ResponseEntity<Habit> updateHabit(@RequestBody CreateHabitRequest createHabitRequest,
+                                             @PathVariable(name = "userId") int userId,
+                                             @PathVariable(name = "habitId") int habitId,
+                                             @PathVariable(name = "themeId") int themeId) {
+//        habitService.saveHabit(name, userId, ...)
+
+        return ResponseEntity.ok(habitService.updateHabit(userId, habitId, createHabitRequest.habitName(), themeId, createHabitRequest.difficultyPoints()));
+
+    }
 }
