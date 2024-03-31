@@ -5,11 +5,11 @@ VALUES
     (3, 'L3'), -- in reality this would only be saved when a habit is accomplished subsequent times but with no streak
     (4, 'L4'); -- in reality this would only be saved when a habit is accomplished subsequent times but with a streak
 
-INSERT INTO habit_user (id, username, is_active)
+INSERT INTO habit_user (id, username, score, is_active)
 VALUES
-    (1, 'user1', 1),
-    (2, 'user2', 1),
-    (3, 'user3', 0);
+    (1, 'user1', 0, 1),
+    (2, 'user2', 0, 1),
+    (3, 'user3', 0, 0);
 
 INSERT INTO habit (id, habit_name, user_id, reward_id, theme_id, difficulty_points, counter)
 VALUES

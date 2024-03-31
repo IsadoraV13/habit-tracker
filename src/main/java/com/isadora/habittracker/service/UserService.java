@@ -1,7 +1,6 @@
 package com.isadora.habittracker.service;
 
 import com.isadora.habittracker.domain.User;
-import com.isadora.habittracker.domain.UserResponse;
 import com.isadora.habittracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +29,9 @@ public class UserService {
 
     public List<User> listAllInactiveUsers() {
         return userRepository.findAllInactiveUsers();
+    }
+
+    public void updateUserScore(int score, int userId) {
+        userRepository.saveUserScore(score, userId);
     }
 }

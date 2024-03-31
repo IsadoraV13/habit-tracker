@@ -2,13 +2,10 @@ package com.isadora.habittracker.controller;
 
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.User;
-import com.isadora.habittracker.domain.UserResponse;
+import com.isadora.habittracker.controller.response.UserResponse;
 import com.isadora.habittracker.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,4 +41,11 @@ public class UserController {
         }
         throw new EntityNotFound();
     }
+
+    @PutMapping("/{userId}/score/{score}")
+    public void updateUserScore(@PathVariable(name = "userId") int userId, @PathVariable(name = "score") int score) {
+        userService.updateUserScore(score, userId);
+
+    }
+
 }

@@ -10,6 +10,7 @@ public class User {
     private int id;
     private String username;
     private Boolean isActive;
+    private int score;
 
     public User() {
 
@@ -19,12 +20,31 @@ public class User {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
 
-    public Boolean getIsActive() {
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Boolean getActive() {
         return isActive;
     }
 
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
 }
