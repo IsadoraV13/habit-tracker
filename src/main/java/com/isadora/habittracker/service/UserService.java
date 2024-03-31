@@ -3,6 +3,7 @@ package com.isadora.habittracker.service;
 import com.isadora.habittracker.domain.User;
 import com.isadora.habittracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,6 +32,7 @@ public class UserService {
         return userRepository.findAllInactiveUsers();
     }
 
+    @Transactional
     public void updateUserScore(int score, int userId) {
         userRepository.saveUserScore(score, userId);
     }
