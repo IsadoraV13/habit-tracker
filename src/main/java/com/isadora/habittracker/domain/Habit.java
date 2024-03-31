@@ -25,6 +25,7 @@ public class Habit {
     private Reward reward;
     private int themeId;
     private int difficultyPoints; //ToDo translate this from an Enum selected by the user (Hard, Medium, Easy)
+    private String StreakFrequency; // iteration1: daily, weekly //ToDo: iteration2: x times a day or week
     private int counter;
 //    @CreatedDate
     @CreationTimestamp
@@ -92,6 +93,14 @@ public class Habit {
 
     public void setDifficultyPoints(int difficultyPoints) {
         this.difficultyPoints = difficultyPoints;
+    }
+
+    public String getStreakFrequency() {
+        return StreakFrequency;
+    }
+
+    public void setStreakFrequency(String streakFrequency) {
+        StreakFrequency = streakFrequency;
     }
 
     public int getCounter() {

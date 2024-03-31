@@ -31,32 +31,35 @@ public class HabitService {
         return habitRepository.findById(habitId);
     }
 
-    public Habit assignDefaultRewardWhenSavingHabit(Habit newHabit) {
+    public void assignDefaultRewardWhenSavingHabit(Habit newHabit) {
         Reward defaultReward = rewardService.listRewardById(1).get();
         newHabit.setReward(defaultReward);
-        return habitRepository.save(newHabit);
 
     }
 
-    public Habit createNewHabit(final int userId, final String habitName, final int themeId, final int difficultyPoints) {
+    public Habit createNewHabit(final int userId, final String habitName, final int themeId, final String streakFrequency,
+                                final int difficultyPoints) {
         Habit newHabit = new Habit();
         newHabit.setHabitName(habitName);
-        newHabit.setUser(userService.listUserById(userId).get());
-        newHabit.setReward(rewardService.listRewardById(1).get());
+        newHabit.setUser(userService.listUserById(userId).get()); //ToDo: do I need a check here (userId is logged in)
         newHabit.setThemeId(themeId);
+        newHabit.setStreakFrequency(streakFrequency);
+        newHabit.setCounter(0);
         newHabit.setDifficultyPoints(difficultyPoints);
         assignDefaultRewardWhenSavingHabit(newHabit);
         return habitRepository.save(newHabit);
     }
 
 
-    public Habit updateHabit(final int userId, final int habitId, final String habitName, final int themeId, final int difficultyPoints) {
+    public Habit updateHabit(final int userId, final int habitId, final String habitName, final int themeId,
+                             final String streakFrequency, final int difficultyPoints) {
         Optional<Habit> habitToUpdate = listHabitById(habitId);
         if (habitToUpdate.isPresent()) {
             habitToUpdate.get().setHabitName(habitName);
             habitToUpdate.get().setUser(userService.listUserById(userId).get());
             habitToUpdate.get().setReward(rewardService.listRewardById(1).get());
             habitToUpdate.get().setThemeId(themeId);
+            habitToUpdate.get().setStreakFrequency(streakFrequency);
             habitToUpdate.get().setDifficultyPoints(difficultyPoints);
             assignDefaultRewardWhenSavingHabit(habitToUpdate.get());
             return habitRepository.save(habitToUpdate.get());

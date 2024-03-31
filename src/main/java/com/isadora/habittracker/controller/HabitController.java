@@ -67,7 +67,8 @@ public class HabitController {
                                              @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
 //        habitService.saveHabit(name, userId, ...)
 
-        return ResponseEntity.ok(habitService.createNewHabit(userId, createHabitRequest.habitName(), themeId, createHabitRequest.difficultyPoints()));
+        return ResponseEntity.ok(habitService.createNewHabit(userId, createHabitRequest.habitName(), themeId,
+                createHabitRequest.streakFrequency(), createHabitRequest.difficultyPoints()));
         // here: needs to take the assignDefault method
 //        habitService.assignRewardWhenSavingHabit(newHabit, rewardService.listRewardById(1).get());
 
@@ -76,6 +77,7 @@ public class HabitController {
     /* Habit saved via postman - without reward
         {
             "habitName": "new habit via postman - without reward",
+            "streakFrequency": "weekly",
             "difficultyPoints": 3
         }
      */
@@ -87,7 +89,8 @@ public class HabitController {
                                              @PathVariable(name = "themeId") int themeId) {
 //        habitService.saveHabit(name, userId, ...)
 
-        return ResponseEntity.ok(habitService.updateHabit(userId, habitId, createHabitRequest.habitName(), themeId, createHabitRequest.difficultyPoints()));
+        return ResponseEntity.ok(habitService.updateHabit(userId, habitId, createHabitRequest.habitName(), themeId,
+                createHabitRequest.streakFrequency(), createHabitRequest.difficultyPoints()));
 
     }
 }

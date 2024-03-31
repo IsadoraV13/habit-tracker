@@ -20,30 +20,40 @@ Quick note:
   &nbsp;
 
 How does a user use the app?
-- enters a habit name (open entry)
-- adds a theme to it
+- create a habit:
+  - name (open answer)
+  - adds/creates a theme (an overarching goal that several habits relate to, e.g. health or career)
+  - adds a streakFrequency - how often do they aim to perform the Habit (daily, weekly) - monthly is too infrequent
+    - stretch: number of times per day, per week
+  - assign difficultyPoints (how hard is it to perform the habit once)
+- adding a theme:
     - if the theme does not exist, they can add/create a new one
     - if the theme already exists, they will be able to select it from a drop down (UI)
     - means that when user clicks drop down, there will be a call to BE to retrieve all themes for that user
-    - what is a theme? an overarching goal 
+    - what is a theme? 
 - in the background, for every new habit, an L0 reward is added.
     - an L1 is earned every time a habit is completed for the first time
 - a difficulty point is a multiplier on the reward:
     - if an easy habit is completed, the multiplier is 1
     - if a hard habit is completed, the multiplier is 3
-- that a number of habits relate to, e.g. health or career
+- xxx
 
 Questions
 - can a habit be created without a theme? 
+
+Questions for Noe
+- Testing
+- do I need to check Optional User in HabitService line 44
+- why does CreatedAt not work for putmapping?
 
 ToDo
 - the default reward (L1) must be associated with all new habits - currently works and created timestamp now works! :)
 - get all themes by user id - Done!
 - pass a theme id when saving a habit (assumption is this be passed in the url)
 - private int userId in Habit; Done
-- add Habit counter - Done
-- create updateHabit (can update: theme, habitName, difficultyPoints)
-- incorporate Habit counter
+- create updateHabit (can update: theme, habitName, difficultyPoints) - Done
+- incorporate Habit counter & Habit Streak frequency (incl changeHabitResponse, createHabitRequest, postmapping, putmapping)
+- 
 
 ### Gamification
 Rewards are obtained for 1st habit completion and for streaks.  
