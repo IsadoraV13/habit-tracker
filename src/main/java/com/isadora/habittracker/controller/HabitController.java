@@ -1,7 +1,6 @@
 package com.isadora.habittracker.controller;
 
 import com.isadora.habittracker.controller.request.CreateHabitRequest;
-import com.isadora.habittracker.controller.response.ThemeResponse;
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.controller.response.HabitResponse;
@@ -82,15 +81,23 @@ public class HabitController {
         }
      */
 
-    @PutMapping("/{userId}/{themeId}/{habitId}")
-    public ResponseEntity<Habit> updateHabit(@RequestBody CreateHabitRequest createHabitRequest,
-                                             @PathVariable(name = "userId") int userId,
-                                             @PathVariable(name = "habitId") int habitId,
-                                             @PathVariable(name = "themeId") int themeId) {
-//        habitService.saveHabit(name, userId, ...)
+    @PutMapping("/user-update/{habitId}")
+    public ResponseEntity<Habit> userHabitUpdate(@RequestBody CreateHabitRequest createHabitRequest,
+                                             @PathVariable(name = "habitId") int habitId) {
 
-        return ResponseEntity.ok(habitService.updateHabit(userId, habitId, createHabitRequest.habitName(), themeId,
-                createHabitRequest.streakFrequency(), createHabitRequest.difficultyPoints()));
+        return ResponseEntity.ok(habitService.userInitiatedHabitUpdate(habitId, createHabitRequest.habitName(),
+                createHabitRequest.themeId(), createHabitRequest.streakFrequency(), createHabitRequest.difficultyPoints()));
 
     }
+
+    @PutMapping("/update/{habitId}/{rewardId}/{counter}")
+    public ResponseEntity<Habit> systemHabitUpdate(@PathVariable(name = "habitId") int habitId,
+                                                   @PathVariable(name = "rewardId") int rewardId,
+                                                   @PathVariable(name = "counter") int counter) {
+
+        return ResponseEntity.ok(habitService.systemInitiatedHabitUpdate(habitId, rewardId, counter));
+
+    }
+
+
 }

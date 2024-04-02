@@ -51,17 +51,24 @@ public class HabitService {
     }
 
 
-    public Habit updateHabit(final int userId, final int habitId, final String habitName, final int themeId,
-                             final String streakFrequency, final int difficultyPoints) {
+    public Habit userInitiatedHabitUpdate(final int habitId, final String habitName, final int themeId,
+                                          final String streakFrequency, final int difficultyPoints) {
         Optional<Habit> habitToUpdate = listHabitById(habitId);
         if (habitToUpdate.isPresent()) {
             habitToUpdate.get().setHabitName(habitName);
-            habitToUpdate.get().setUser(userService.listUserById(userId).get());
-            habitToUpdate.get().setReward(rewardService.listRewardById(1).get());
             habitToUpdate.get().setThemeId(themeId);
             habitToUpdate.get().setStreakFrequency(streakFrequency);
             habitToUpdate.get().setDifficultyPoints(difficultyPoints);
-            assignDefaultRewardWhenSavingHabit(habitToUpdate.get());
+            return habitRepository.save(habitToUpdate.get());
+        }
+        throw new EntityNotFound();
+    }
+
+    public Habit systemInitiatedHabitUpdate(final int habitId, final int rewardId, final int counter) {
+        Optional<Habit> habitToUpdate = listHabitById(habitId);
+        if (habitToUpdate.isPresent()) {
+            habitToUpdate.get().setReward(rewardService.listRewardById(rewardId).get());
+            habitToUpdate.get().setCounter(counter);
             return habitRepository.save(habitToUpdate.get());
         }
         throw new EntityNotFound();
