@@ -4,8 +4,10 @@ import com.isadora.habittracker.controller.request.CreateHabitRequest;
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.controller.response.HabitResponse;
+import com.isadora.habittracker.domain.User;
 import com.isadora.habittracker.service.HabitService;
 import com.isadora.habittracker.service.RewardService;
+import com.isadora.habittracker.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,9 +22,12 @@ public class HabitController {
     private final HabitService habitService;
     private final RewardService rewardService;
 
-    public HabitController(final HabitService habitService, RewardService rewardService) {
+    private final UserService userService;
+
+    public HabitController(final HabitService habitService, RewardService rewardService, UserService userService) {
         this.habitService = habitService;
         this.rewardService = rewardService;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -66,7 +71,10 @@ public class HabitController {
                                              @PathVariable(name = "themeId") int themeId) { // CreateHabitRequest (name, userId,...)
 //        habitService.saveHabit(name, userId, ...)
 
-        return ResponseEntity.ok(habitService.createNewHabit(userId, createHabitRequest.habitName(), themeId,
+        //get user from userService here and pass user to HabitService
+        User loggedInUser = userService.listUserById(userId).get();
+
+        return ResponseEntity.ok(habitService.createNewHabit(loggedInUser, createHabitRequest.habitName(), themeId,
                 createHabitRequest.streakFrequency(), createHabitRequest.difficultyPoints()));
         // here: needs to take the assignDefault method
 //        habitService.assignRewardWhenSavingHabit(newHabit, rewardService.listRewardById(1).get());

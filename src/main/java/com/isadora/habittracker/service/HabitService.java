@@ -3,6 +3,7 @@ package com.isadora.habittracker.service;
 import com.isadora.habittracker.domain.EntityNotFound;
 import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.domain.Reward;
+import com.isadora.habittracker.domain.User;
 import com.isadora.habittracker.repository.HabitRepository;
 import org.springframework.stereotype.Service;
 
@@ -31,17 +32,17 @@ public class HabitService {
         return habitRepository.findById(habitId);
     }
 
-    public void assignDefaultRewardWhenSavingHabit(Habit newHabit) {
+    private void assignDefaultRewardWhenSavingHabit(Habit newHabit) {
         Reward defaultReward = rewardService.listRewardById(1).get();
         newHabit.setReward(defaultReward);
 
     }
 
-    public Habit createNewHabit(final int userId, final String habitName, final int themeId, final String streakFrequency,
+    public Habit createNewHabit(final User loggedInUser, final String habitName, final int themeId, final String streakFrequency,
                                 final int difficultyPoints) {
         Habit newHabit = new Habit();
         newHabit.setHabitName(habitName);
-        newHabit.setUser(userService.listUserById(userId).get()); //ToDo: do I need a check here (userId is logged in)
+        newHabit.setUser(loggedInUser);
         newHabit.setThemeId(themeId);
         newHabit.setStreakFrequency(streakFrequency);
         newHabit.setCounter(0);

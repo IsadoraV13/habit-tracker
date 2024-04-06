@@ -3,11 +3,9 @@ package com.isadora.habittracker.domain;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.ZonedDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name="habit")
@@ -25,7 +23,7 @@ public class Habit {
     private Reward reward;
     private int themeId;
     private int difficultyPoints; //ToDo translate this from an Enum selected by the user (Hard, Medium, Easy)
-    private String StreakFrequency; // iteration1: daily, weekly //ToDo: iteration2: x times a day or week
+    private String streakFrequency; // iteration1: daily, weekly //ToDo: iteration2: x times a day or week
     private int counter;
 //    @CreatedDate
     @CreationTimestamp
@@ -96,11 +94,11 @@ public class Habit {
     }
 
     public String getStreakFrequency() {
-        return StreakFrequency;
+        return streakFrequency;
     }
 
     public void setStreakFrequency(String streakFrequency) {
-        StreakFrequency = streakFrequency;
+        this.streakFrequency = streakFrequency;
     }
 
     public int getCounter() {
@@ -125,5 +123,18 @@ public class Habit {
 
     public void setLastModified(Instant lastModified) {
         this.lastModified = lastModified;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Habit habit = (Habit) o;
+        return themeId == habit.themeId && difficultyPoints == habit.difficultyPoints && counter == habit.counter && Objects.equals(id, habit.id) && Objects.equals(habitName, habit.habitName) && Objects.equals(user, habit.user) && Objects.equals(reward, habit.reward) && Objects.equals(streakFrequency, habit.streakFrequency);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, habitName, user, reward, themeId, difficultyPoints, streakFrequency, counter);
     }
 }
