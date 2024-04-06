@@ -8,22 +8,26 @@ import com.isadora.habittracker.repository.HabitRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.AdditionalAnswers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 
 
 @ExtendWith(MockitoExtension.class)
 class HabitServiceTest {
-
     private HabitService habitService;
-    @MockBean
+    @Mock
     private HabitRepository habitRepository;
-    @MockBean
+    @Mock
     private RewardService rewardService;
-    @MockBean
+    @Mock
     private UserService userService;
     private User testUser;
     private Reward testReward;
@@ -34,30 +38,39 @@ class HabitServiceTest {
     void setUp() {
         habitService = new HabitService(habitRepository, rewardService, userService);
 
+        testUser = new User();
+        testUser.setUsername("new gal");
+        testUser.setActive(true);
+        testUser.setId(3);
 
+        testReward = new Reward();
+        testReward.setId(1);
+        testReward.setRewardName("L1");
+
+        testTheme = new Theme();
+        testTheme.setId(2);
     }
 
-//    @Test
-//    void createNewHabit() {
-//        testUser.setUsername("new gal");
-//        testUser.setActive(true);
-//        testUser.setId(3);
-//        testReward.setId(1);
-//        testReward.setRewardName("L1");
-//        testTheme.setId(2);
-//        Habit expectedHabit = new Habit();
-//        expectedHabit.setHabitName("new habit");
-//        expectedHabit.setUser(testUser);
-//        expectedHabit.setReward(testReward);
-//        expectedHabit.setThemeId(testTheme.getId());
-//        expectedHabit.setDifficultyPoints(4);
-//
-//        Mockito.when(RewardService.listRewardById(1)).thenReturn(testReward);
-//        habitService.assignDefaultRewardWhenSavingHabit(expectedHabit);
-//        assertThat(expectedHabit).isEqualTo(habitService.createNewHabit(
-//                3, "new habit", 2, 4));
-//
-//    }
+    @Test
+    void createNewHabit() {
+        Habit expectedHabit = new Habit();
+        expectedHabit.setHabitName("new habit");
+        expectedHabit.setUser(testUser);
+        expectedHabit.setReward(testReward);
+        expectedHabit.setThemeId(testTheme.getId());
+        expectedHabit.setStreakFrequency("weekly");
+        expectedHabit.setCounter(0);
+        expectedHabit.setDifficultyPoints(4);
+
+        Mockito.when(rewardService.listRewardById(1)).thenReturn(Optional.ofNullable(testReward));
+        Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+
+        Habit actualHabit = habitService.createNewHabit(
+                testUser, "new habit", 2, "weekly", 4);
+
+        assertThat(actualHabit).isEqualTo(expectedHabit);
+
+    }
 
     @Test
     void updateHabit() {
