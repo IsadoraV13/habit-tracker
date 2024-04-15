@@ -18,7 +18,7 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query(value = "select id, username, score, is_active from habit_user WHERE is_active = false", nativeQuery = true)
     List<User> findAllInactiveUsers();
 
-    @Modifying
+    @Modifying(flushAutomatically = true)
     @Transactional
     @Query(value = "update habit_user set score =?1 WHERE id = ?2", nativeQuery = true)
     void saveUserScore(int score, int userId);

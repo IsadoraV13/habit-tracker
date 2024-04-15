@@ -85,10 +85,12 @@ public class HabitController {
         {
             "habitName": "new habit via postman - without reward",
             "streakFrequency": "weekly",
-            "difficultyPoints": 3
+            "difficultyPoints": 2
         }
      */
 
+    // ToDo fix created Timestamp not working
+    // ToDo use native query to only update required fields?
     @PutMapping("/user-update/{habitId}")
     public ResponseEntity<Habit> userHabitUpdate(@RequestBody CreateHabitRequest createHabitRequest,
                                              @PathVariable(name = "habitId") int habitId) {
@@ -98,14 +100,46 @@ public class HabitController {
 
     }
 
-    @PutMapping("/update/{habitId}/{rewardId}/{counter}")
-    public ResponseEntity<Habit> systemHabitUpdate(@PathVariable(name = "habitId") int habitId,
-                                                   @PathVariable(name = "rewardId") int rewardId,
-                                                   @PathVariable(name = "counter") int counter) {
+    /*
+    http://localhost:8086/habits/user-update/2
+    {
+    "habitName": "user updated habit via postman",
+    "streakFrequency": "daily",
+    "difficultyPoints": 3
+     }
 
-        return ResponseEntity.ok(habitService.systemInitiatedHabitUpdate(habitId, rewardId, counter));
+     result:
+    - habit name, streakFreq and diffPoints change
+    - reward Level, habit counter and user score remain unchanged
+     */
 
+    @PutMapping("/system-update/{userId}/{habitId}")
+    public ResponseEntity<Habit> systemHabitUpdate(@PathVariable(name = "userId") int userId,
+                                                   @PathVariable(name = "habitId") int habitId) {
+
+        //get user from userService here and pass user to HabitService
+        var loggedInUser = userService.listUserById(userId);
+        if (loggedInUser.isEmpty()) {
+            throw new EntityNotFound();
+        }
+
+        var habitToUpdate = habitService.listHabitById(habitId);
+        if (habitToUpdate.isEmpty()) {
+            throw new EntityNotFound();
+        }
+
+        return ResponseEntity.ok(habitService.systemInitiatedHabitUpdate(loggedInUser.get(), habitToUpdate.get()));
     }
+
+    /*
+    http://localhost:8086/habits/system-update/1/2
+    empty body
+
+    result:
+    - habit reward goes to L2
+    - habit counter goes to 1
+    - user score goes up
+     */
 
 
 }
