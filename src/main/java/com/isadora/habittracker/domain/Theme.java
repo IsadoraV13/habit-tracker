@@ -22,11 +22,23 @@ public class Theme {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getThemeName() {
         return themeName;
     }
 
+    public void setThemeName(String themeName) {
+        this.themeName = themeName;
+    }
+
     public User getUser() {
         return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

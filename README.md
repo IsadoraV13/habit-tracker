@@ -37,14 +37,39 @@ How does a user use the app?
     - if an easy habit is completed, the multiplier is 1
     - if a hard habit is completed, the multiplier is 3
 - xxx
+- Score:
+    - Counter starts at 0
+    - When performed first time, counter goes to 1, and streak counts from then. If streak breaks, counter drops to 0 
+    - Level 1 (performed once)
+      - L1 + DiffPt1 =  2
+      - L1 + DiffPt2 =  3
+      - L1 + DiffPt3 =  5 
+    - Level 2 (performed 3 times)
+      - L2 + DiffPt1 =  previous + 0
+      - L2 + DiffPt2 =  previous + 3
+      - L2 + DiffPt3 =  previous + 5
+    - Level 3 (performed more than 3 times)
+      - L3 + DiffPt1 + NoStreak =  previous + 1
+      - L3 + DiffPt2 + NoStreak =  previous + 2
+      - L3 + DiffPt3 + NoStreak =  previous + 3
+      - L3 + DiffPt1 + Streak =  (previous + 1) + 0.1 * StreakDays?
+      - L3 + DiffPt2 + Streak =  (previous + 2) + 0.1 * StreakDays?
+      - L3 + DiffPt3 + Streak =  (previous + 3) * 0.1 * StreakDays?
 
 Questions
 - can a habit be created without a theme? 
+- MVP: streak savers
+- why should I care about the points? Get app free for a month
+- Optional checks
 
 Questions for Noe
 - Testing
-- do I need to check Optional User in HabitService line 44
+    - how to test methods that return void? 
+    - Why do we not use private final variables in Test?
+
 - why does CreatedAt not work for putmapping?
+- themeId in url (...)
+- Try/Catch vs Throw
 
 ToDo
 - the default reward (L1) must be associated with all new habits - currently works and created timestamp now works! :)
@@ -52,8 +77,16 @@ ToDo
 - pass a theme id when saving a habit (assumption is this be passed in the url)
 - private int userId in Habit; Done
 - create updateHabit (can update: theme, habitName, difficultyPoints) - Done
-- incorporate Habit counter & Habit Streak frequency (incl changeHabitResponse, createHabitRequest, postmapping, putmapping)
-- 
+- add Habit counter & streakFrequency (incl changeHabitResponse, createHabitRequest, postmapping, putmapping) - Done
+- add Score variable into User (incl putMapping to update score) - Simple version Done
+- when habit performed, first iteration of calculate score:
+    - pass habit counter, reward level habit id, habit difficulty points
+    - if counter=0 and Reward=L1, calculate score
+    - create putMapping for counter update (user clicks a button to say they've performed a habit) 
+    - 
+- Tests
+    - HabitServiceTest - CreateHabit - Done
+    - HabitServiceTest - CreateHabit - Done
 
 ### Gamification
 Rewards are obtained for 1st habit completion and for streaks.  

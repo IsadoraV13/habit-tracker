@@ -27,13 +27,15 @@ public class Reward {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getRewardName() {
         return rewardName;
     }
 
-//    public Set<Habit> getHabits() {
-//        return habits;
-//    }
-
+    public void setRewardName(String rewardName) {
+        this.rewardName = rewardName;
+    }
 }
