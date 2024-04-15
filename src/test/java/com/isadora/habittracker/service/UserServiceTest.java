@@ -29,9 +29,9 @@ class UserServiceTest {
     void updateUserScore() {
 
 //        Mockito.doNothing().when(userRepository).saveUserScore(isA(Integer.class), isA(Integer.class));
+        userService.updateUserScore(33,1); // ToDo which call is made here?
 
-        userRepository.saveUserScore(33,1);
-
+        // ToDo and here?
         Mockito.verify(userRepository, Mockito.times(1)).saveUserScore(33, 1);
 
     }
