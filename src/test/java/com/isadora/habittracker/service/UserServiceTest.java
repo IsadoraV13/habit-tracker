@@ -10,6 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
@@ -22,17 +23,16 @@ class UserServiceTest {
 
     @BeforeEach
     void setUp() {
-        userService = new UserService(userRepository, habitService);
+        userService = new UserService(userRepository);
     }
 
     @Test
     void updateUserScore() {
 
 //        Mockito.doNothing().when(userRepository).saveUserScore(isA(Integer.class), isA(Integer.class));
-        userService.updateUserScore(33,1); // ToDo which call is made here?
+        userService.updateUserScore(33,1);
 
-        // ToDo and here?
-        Mockito.verify(userRepository, Mockito.times(1)).saveUserScore(33, 1);
+        verify(userRepository).saveUserScore(33, 1);
 
     }
 
