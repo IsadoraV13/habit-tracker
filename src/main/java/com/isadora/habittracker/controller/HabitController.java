@@ -20,13 +20,10 @@ import java.util.stream.StreamSupport;
 public class HabitController {
 
     private final HabitService habitService;
-    private final RewardService rewardService;
-
     private final UserService userService;
 
     public HabitController(final HabitService habitService, RewardService rewardService, UserService userService) {
         this.habitService = habitService;
-        this.rewardService = rewardService;
         this.userService = userService;
     }
 
@@ -83,7 +80,7 @@ public class HabitController {
 
     /* Habit saved via postman - without reward
         {
-            "habitName": "new habit via postman - without reward",
+            "habitName": "new habit via postman - with reward",
             "streakFrequency": "weekly",
             "difficultyPoints": 2
         }
@@ -114,6 +111,7 @@ public class HabitController {
      */
 
     @PutMapping("/system-update/{userId}/{habitId}")
+    //the userId is passed in the url as the logged in user
     public ResponseEntity<Habit> systemHabitUpdate(@PathVariable(name = "userId") int userId,
                                                    @PathVariable(name = "habitId") int habitId) {
 

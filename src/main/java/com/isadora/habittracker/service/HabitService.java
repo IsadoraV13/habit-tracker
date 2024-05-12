@@ -73,11 +73,10 @@ public class HabitService {
             // they might be moved to the next reward level
 
         // get current stats
-        int currentScore = loggedInUser.getScore();
         int rewardId = habitToUpdate.getReward().getId();
         String frequency = habitToUpdate.getStreakFrequency();
 
-        // get current score
+        // get current counter
         int counter = habitToUpdate.getCounter();
 
         // calculate and update score based on current stats

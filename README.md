@@ -21,7 +21,7 @@ Quick note:
 
 How does a user use the app?
 - create a habit:
-  - name (open answer)
+  - name (open form answer, character limit?)
   - adds/creates a theme (an overarching goal that several habits relate to, e.g. health or career)
   - adds a streakFrequency - how often do they aim to perform the Habit (daily, weekly) - monthly is too infrequent
     - stretch: number of times per day, per week
@@ -65,7 +65,11 @@ Questions
 Questions for Noe
 - Testing
     - how to test methods that return void? 
-    - Why do we not use private final variables in Test?
+    - usage of private final vs private for injections in unit test
+    - is there a logical/functional order for creating tests?
+    - can I call a test integration if it tests only 2 parts - not end to end?
+    - Am I correct to use @SpringBootTest in integration test because we need the injected bean to be managed by Spring?
+
 
 - why does CreatedAt not work for putmapping?
 - themeId in url (...)
@@ -79,14 +83,15 @@ ToDo
 - create updateHabit (can update: theme, habitName, difficultyPoints) - Done
 - add Habit counter & streakFrequency (incl changeHabitResponse, createHabitRequest, postmapping, putmapping) - Done
 - add Score variable into User (incl putMapping to update score) - Simple version Done
-- when habit performed, first iteration of calculate score:
+- when habit performed, first iteration of calculate score (systemHabitUpdate() ):
     - pass habit counter, reward level habit id, habit difficulty points
     - if counter=0 and Reward=L1, calculate score
     - create putMapping for counter update (user clicks a button to say they've performed a habit) 
     - 
 - Tests
     - HabitServiceTest - CreateHabit - Done
-    - HabitServiceTest - CreateHabit - Done
+    - UserServiceTest - UpdateUserScore - Done
+    - HabitControllerIntegrationTest 
 
 ### Gamification
 Rewards are obtained for 1st habit completion and for streaks.  
