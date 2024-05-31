@@ -29,8 +29,13 @@ class HabitServiceTest {
     @Mock
     private UserService userService;
     private User testUser;
-    private Reward testReward;
+    private Habit testHabit;
+    private Reward testReward1;
+    private Reward testReward2;
     private Theme testTheme;
+    private String habitName = "new habit";
+    private String weekly = "weekly";
+    private String daily = "daily";
 
     @BeforeEach
     void setUp() {
@@ -41,77 +46,85 @@ class HabitServiceTest {
         testUser.setActive(true);
         testUser.setId(3);
 
-        testReward = new Reward();
-        testReward.setId(1);
-        testReward.setRewardName("L1");
+        testReward1 = new Reward();
+        testReward1.setId(1);
+        testReward1.setRewardName("L1");
 
-        testTheme = new Theme();
-        testTheme.setId(2);
+        testReward2 = new Reward();
+        testReward2.setId(1);
+        testReward2.setRewardName("L1");
+
+        testHabit = new Habit();
+        testHabit.setHabitName(habitName);
+        testHabit.setUser(testUser);
+        testHabit.setReward(testReward1);
+        testHabit.setThemeId(2);
+        testHabit.setStreakFrequency(weekly);
+        testHabit.setCounter(0);
+        testHabit.setDifficultyPoints(4);
+
+//        testTheme = new Theme();
+//        testTheme.setId(2);
     }
 
     @Test
     void createNewHabitTest() {
-        // Given
-        String habitName = "new habit";
-        String frequency = "weekly";
-        Habit expectedHabit = new Habit();
-        expectedHabit.setHabitName(habitName);
-        expectedHabit.setUser(testUser);
-        expectedHabit.setReward(testReward);
-        expectedHabit.setThemeId(testTheme.getId());
-        expectedHabit.setStreakFrequency(frequency);
-        expectedHabit.setCounter(0);
-        expectedHabit.setDifficultyPoints(4);
+        // Given -> testHabit
 
-        Mockito.when(rewardService.listRewardById(1)).thenReturn(Optional.ofNullable(testReward));
+        Mockito.when(rewardService.listRewardById(1)).thenReturn(Optional.ofNullable(testReward1));
         Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 
-        // When
-        Habit actualHabit = habitService.createNewHabit(
-                testUser, habitName, 2, frequency, 4);
+        // When -> createNewHabit()
+        Habit savedHabit = habitService.createNewHabit(
+                testUser, habitName, 2, weekly, 4);
 
+        // ToDo: check with Noe: why does actualHabit not have timestamps or id?
+        System.out.println("savedHabit: " + savedHabit);
+        System.out.println("testHabit: " + testHabit);
         // Then
-        assertThat(actualHabit).isEqualTo(expectedHabit);
+        assertThat(savedHabit).isEqualTo(testHabit);
 
     }
 
     @Test
     void systemInitiatedHabitUpdateTest() {
-        // Given
-        // reward setup
-        Reward reward1 = new Reward();
-        reward1.setId(1);
-
-        Reward reward2 = new Reward();
-        reward2.setId(1);
-
-        // habitToUpdate setup
-        Habit habitToUpdate = new Habit();
-        habitToUpdate.setId(2);
-        habitToUpdate.setReward(reward1);
-        habitToUpdate.setStreakFrequency("daily");
-        habitToUpdate.setCounter(0);
-
-        // savedHabit setup
-        Habit savedHabit = new Habit();
-        savedHabit.setId(2);
-        savedHabit.setReward(reward1);
-        savedHabit.setStreakFrequency("daily");
-        savedHabit.setCounter(0);
-
-        // user setup
-        User user = new User();
-        user.setId(1);
-        user.setScore(0);
+        // Given -> testHabit
+        testHabit.setCounter(0);
 
         int newscore = 5;
-        Mockito.when(userService.calculateUserScore(user, habitToUpdate)).thenReturn(5);
-//        Mockito.when(habitService.updateRewardId(habit.getReward().getId(), habit.getStreakFrequency(), habit.getCounter()));
-        Mockito.when(rewardService.listRewardById(2)).thenReturn(Optional.of(reward2));
-        Mockito.when(habitRepository.save(habitToUpdate)).thenReturn(savedHabit);
+        Mockito.when(userService.calculateUserScore(testUser, testHabit)).thenReturn(newscore);
+        Mockito.when(rewardService.listRewardById(2)).thenReturn(Optional.of(testReward2));
+        Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+
+        // When -> systemInitiatedHabitUpdate()
+        Habit savedHabit = habitService.systemInitiatedHabitUpdate(testUser, testHabit);
+
+        System.out.println("savedHabit: " + savedHabit);
+        System.out.println("testHabit: " + testHabit);
 
         // Then
-//        assertThat(actualHabit).isEqualTo(expectedHabit);
+        assertThat(savedHabit).isEqualTo(testHabit);
 
+    }
+
+    @Test
+    void userInitiatedHabitUpdate() {
+        // Given -> testHabit
+        testHabit.setId(1);
+        testHabit.setCounter(0);
+
+        Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
+
+        // When -> userInitiatedHabitUpdate()
+        // change themeId from 2 to 3
+        // change weekly to daily
+        // change diffPoint from 4 to 3
+        Habit savedHabit = habitService.userInitiatedHabitUpdate(1,habitName, 3, daily, 3);
+
+        System.out.println("savedHabit: " + savedHabit);
+        System.out.println("testHabit: " + testHabit);
+
+        // Then
+        assertThat(savedHabit).isEqualTo(testHabit);
     }
 }

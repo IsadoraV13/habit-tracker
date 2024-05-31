@@ -113,16 +113,24 @@ public class Habit {
         return created;
     }
 
-    public void setCreated(Instant created) {
-        this.created = created;
-    }
-
     public Instant getLastModified() {
         return lastModified;
     }
 
-    public void setLastModified(Instant lastModified) {
-        this.lastModified = lastModified;
+    @Override
+    public String toString() {
+        return "Habit{" +
+                "id=" + id +
+                ", habitName='" + habitName + '\'' +
+                ", user=" + user +
+                ", reward=" + reward +
+                ", themeId=" + themeId +
+                ", difficultyPoints=" + difficultyPoints +
+                ", streakFrequency='" + streakFrequency + '\'' +
+                ", counter=" + counter +
+                ", created=" + created +
+                ", lastModified=" + lastModified +
+                '}';
     }
 
     @Override

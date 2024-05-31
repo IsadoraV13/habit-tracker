@@ -63,6 +63,12 @@ Questions
 - Optional checks
 
 Questions for Noe
+- Setters on entity class
+- testing ID generation
+- asserts equal for objects with timestamps
+- is systemInitiatedUpdate method implicitly testing updateReward - is that bad practice?
+
+
 - Testing
     - how to test methods that return void? 
     - usage of private final vs private for injections in unit test
