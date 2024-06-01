@@ -113,6 +113,7 @@ class HabitServiceTest {
         testHabit.setId(1);
         testHabit.setCounter(0);
 
+        Mockito.when(habitRepository.findById(1)).thenReturn(Optional.ofNullable(testHabit));
         Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 
         // When -> userInitiatedHabitUpdate()
