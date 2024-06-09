@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 @Entity
-@Table(name="habit")
+@Table(name = "habit")
 public class Habit {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "theme")
 public class Theme {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
     private String themeName; // e.g. health, career progression, family
 
@@ -20,10 +20,6 @@ public class Theme {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getThemeName() {

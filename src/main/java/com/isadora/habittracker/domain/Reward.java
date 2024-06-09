@@ -2,13 +2,11 @@ package com.isadora.habittracker.domain;
 
 import jakarta.persistence.*;
 
-import java.util.Set;
-
 @Entity
 @Table(name="reward")
 public class Reward {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private String rewardName;
 
