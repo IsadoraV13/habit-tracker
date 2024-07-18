@@ -5,6 +5,7 @@ import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.domain.Theme;
 import com.isadora.habittracker.domain.User;
 import com.isadora.habittracker.repository.HabitRepository;
+import com.isadora.habittracker.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,6 +29,8 @@ class HabitServiceTest {
     private RewardService rewardService;
     @Mock
     private UserService userService;
+    @Mock
+    private UserRepository userRepository;
     private User testUser;
     private Habit testHabit;
     private Reward testReward1;
@@ -39,7 +42,7 @@ class HabitServiceTest {
 
     @BeforeEach
     void setUp() {
-        habitService = new HabitService(habitRepository, rewardService, userService);
+        habitService = new HabitService(habitRepository, rewardService, userService, userRepository);
 
         testUser = new User();
         testUser.setUsername("new gal");
@@ -91,8 +94,8 @@ class HabitServiceTest {
         // Given -> testHabit
         testHabit.setCounter(0);
 
-        int newscore = 5;
-        Mockito.when(userService.calculateUserScore(testUser, testHabit)).thenReturn(newscore);
+        int newScore = 5;
+        Mockito.when(userService.calculateUserScore(testUser, testHabit)).thenReturn(newScore);
         Mockito.when(rewardService.listRewardById(2)).thenReturn(Optional.of(testReward2));
         Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 
@@ -104,6 +107,26 @@ class HabitServiceTest {
 
         // Then
         assertThat(savedHabit).isEqualTo(testHabit);
+
+    }
+    @Test
+    void systemInitiatedHabitUpdateTestwithError() {
+        // Given -> testHabit
+        testHabit.setCounter(0);
+
+        int newScore = 5;
+        Mockito.when(userService.calculateUserScore(testUser, testHabit)).thenReturn(newScore);
+        Mockito.when(rewardService.listRewardById(2)).thenReturn(Optional.of(testReward2));
+        Mockito.when(habitRepository.save(any())).thenReturn(new Exception());
+
+        // When -> systemInitiatedHabitUpdate()
+        Habit updatedHabit = habitService.systemInitiatedHabitUpdate(testUser, testHabit);
+
+        System.out.println("updatedHabit: " + updatedHabit);
+        System.out.println("testHabit: " + testHabit);
+
+        // Then
+        assertThat(updatedHabit).isNull();
 
     }
 

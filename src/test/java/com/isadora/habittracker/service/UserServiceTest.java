@@ -39,4 +39,12 @@ class UserServiceTest {
     @Test
     void calculateUserScore() {
     }
+
+    @Test
+    void listAllInactiveUsers() {
+    }
+
+    @Test
+    void testCalculateUserScore() {
+    }
 }

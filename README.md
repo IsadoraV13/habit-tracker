@@ -63,11 +63,14 @@ Questions
 - Optional checks
 
 Questions for Noe
-- Setters on entity class
+- Setters on entity class - read more on this
 - testing ID generation
-- asserts equal for objects with timestamps
-- is systemInitiatedUpdate method implicitly testing updateReward - is that bad practice?
+- asserts equal for objects with timestamps - is an issue for integration testing; check back with Noe
 
+Latest
+- If service method A calls repository method X and I have another service method B that needs the same functionality,
+- should it call the other service method or call the repository directly?
+    
 
 - Testing
     - how to test methods that return void? 

@@ -5,6 +5,7 @@ import com.isadora.habittracker.domain.Habit;
 import com.isadora.habittracker.domain.Reward;
 import com.isadora.habittracker.domain.User;
 import com.isadora.habittracker.repository.HabitRepository;
+import com.isadora.habittracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,11 +18,13 @@ public class HabitService {
     private final HabitRepository habitRepository;
     private final RewardService rewardService;
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public HabitService(final HabitRepository habitRepository, RewardService rewardService, UserService userService) {
+    public HabitService(final HabitRepository habitRepository, RewardService rewardService, UserService userService, UserRepository userRepository) {
         this.habitRepository = habitRepository;
         this.rewardService = rewardService;
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     public List<Habit> listAllHabits() {
@@ -68,9 +71,9 @@ public class HabitService {
     // this is triggered when a user completes a habit (score goes up and reward level may go up)
     public Habit systemInitiatedHabitUpdate(User loggedInUser, Habit habitToUpdate) {
         // this would be called when a user performs a habit, therefore:
-            // the (habit) counter changes
-            // the (user) score is updated - based on difficultyPoints and streakFrequency
-            // they might be moved to the next reward level (based on their level of progress)
+        // the (habit) counter changes
+        // the (user) score is updated - based on difficultyPoints and streakFrequency
+        // they might be moved to the next reward level (based on their level of progress)
 
         // get current stats
         int rewardId = habitToUpdate.getReward().getId();
@@ -88,16 +91,26 @@ public class HabitService {
             throw new EntityNotFound();
         }
         habitToUpdate.setReward(updatedReward.get());
-        habitToUpdate.setCounter(counter+1);
+        habitToUpdate.setCounter(counter + 1);
 
-        // ToDo: ask Noe whether this should be elsewhere as ideally need to ensure habit is updated successfully first
-        // calculate and update score based on current stats
-        // note that the loggedInUser has already been verified in the habit controller before passing to this service
-        int newScore = userService.calculateUserScore(loggedInUser, habitToUpdate);
-        loggedInUser.setScore(newScore);
 //        userService.updateUserScore(newScore, loggedInUser.getId());
 
-        return habitRepository.save(habitToUpdate);
+        Habit updatedHabit = null;
+        try {
+            updatedHabit = habitRepository.save(habitToUpdate);
+        } catch (Exception e) {
+        }
+
+        // calculate and update score based on current stats
+        // loggedInUser already verified in habit controller before passing to this service
+        int newScore = userService.calculateUserScore(loggedInUser, habitToUpdate);
+        loggedInUser.setScore(newScore);
+        try {
+            userRepository.saveUserScore(newScore, loggedInUser.getId());
+        } catch (Exception e) {
+        }
+
+        return updatedHabit;
         // ToDo check with Noe: is this the right way to handle the fact that save() might return an exception?
 
 
