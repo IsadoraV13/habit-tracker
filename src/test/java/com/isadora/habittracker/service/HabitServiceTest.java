@@ -73,7 +73,6 @@ class HabitServiceTest {
     @Test
     void createNewHabitTest() {
         // Given -> testHabit
-
         Mockito.when(rewardService.listRewardById(1)).thenReturn(Optional.ofNullable(testReward1));
         Mockito.when(habitRepository.save(any())).then(AdditionalAnswers.returnsFirstArg());
 

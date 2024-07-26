@@ -29,11 +29,12 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
+//        userRepository.deleteAll();
+
         activeTestUser2 = new User();
         activeTestUser2.setUsername("activeTestUser2");
         activeTestUser2.setActive(true);
         entityManager.persist(activeTestUser2);
-
 
         activeTestUser3 = new User();
         activeTestUser3.setUsername("activeTestUser3");
