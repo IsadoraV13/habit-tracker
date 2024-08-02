@@ -2,6 +2,8 @@ package com.isadora.habittracker.domain;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "habit_user", uniqueConstraints = { @UniqueConstraint(name = "UniqueUsername", columnNames = { "username", "is_active" }) })
 public class User {
@@ -56,5 +58,17 @@ public class User {
                 ", isActive=" + isActive +
                 ", score=" + score +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return getId() == user.getId() && getScore() == user.getScore() && getUsername().equals(user.getUsername()) && isActive.equals(user.isActive);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getUsername(), isActive, getScore());
     }
 }
